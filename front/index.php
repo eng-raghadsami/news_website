@@ -1,0 +1,293 @@
+<?php include '../SQL/db_connect.php'; ?>
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles.css">
+  <title>Document</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Hand+Pre:wght@400..700&family=Lalezar&family=Lemonada:wght@300..700&display=swap');
+  </style>
+</head>
+
+<body>
+  <div class="all">
+    <header>
+      <nav class="navbar">
+        <div class="logo">
+          <img src="images/Logo.png" alt="logo" />
+        </div>
+        <ul>
+          <li><a href="index.php">Home</a></li>
+          <li><a href="politics.php">Politics</a></li>
+          <li><a href="technology.php">Technology</a></li>
+          <li><a href="sports.php">Sports</a></li>
+
+
+          <li><a href="articles.php">Featured articles</a></li>
+          <li><a href="login.php">Login</a></li>
+          <li><a href="contact.php">Contact Us</a></li>
+
+        </ul>
+
+      </nav>
+
+
+    </header>
+
+    <div class="page-layout">
+
+
+
+      <aside class="sidebar">
+        <?php
+
+        $sql = "SELECT article_id, content, published_date FROM articles 
+        WHERE category_id = (SELECT category_id FROM categories WHERE category_name = 'Popular' LIMIT 1)
+        ORDER BY published_date DESC LIMIT 7";
+        $popular_result = $conn->query($sql);
+        ?>
+
+        <div class="popular-news">
+          <h3>Popular News</h3>
+
+          <ul>
+            <?php if ($popular_result && $popular_result->num_rows > 0): ?>
+              <?php while ($row = $popular_result->fetch_assoc()): ?>
+                <li>
+                  <div>
+                    <h4><?= mb_substr(strip_tags($row['content']), 0, 90) ?></h4>
+                      <span><?= substr($row['published_date'], 0, 10) ?></span>
+
+                  </div>
+                </li>
+              <?php endwhile; ?>
+            <?php else: ?>
+              <li>
+                <div>No popular news found.</div>
+              </li>
+            <?php endif; ?>
+          </ul>
+
+        </div>
+        <?php
+
+        $sql = "SELECT article_id, title, image_url, published_date FROM articles 
+        WHERE category_id = (SELECT category_id FROM categories WHERE category_name = 'Ads' LIMIT 1)
+        ORDER BY published_date DESC LIMIT 7";
+        $result = $conn->query($sql);
+        ?>
+        <div class="ads">
+          <h3>📢 Ads</h3>
+          <div class="announcement">
+            <ul>
+              <?php if ($result && $result->num_rows > 0): ?>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                  <li>
+                    <div>
+                      <h4><?= htmlspecialchars($row['title']) ?></h4>
+                      <img src="../uploads/<?= $row['image_url'] ?>" alt="Popular Image">
+
+                      <span><?= substr($row['published_date'], 0, 10) ?></span>
+                    </div>
+                  </li>
+
+
+                <?php endwhile; ?>
+              <?php else: ?>
+                <li>
+                  <div>No popular news found.</div>
+                </li>
+              <?php endif; ?>
+            </ul>
+          </div>
+
+
+        </div>
+      </aside>
+      <hr>
+      <main class="main-content">
+        <div class="aboutMe" id="home">
+          <h1 class="name">News<span class="nest">Nest</span></h1>
+
+          <img src="images/Home.jpg" alt="News Cover" class="hero-image" />
+        </div>
+
+
+
+
+
+        <?php
+        $sql = "SELECT article_id, content, image_url, published_date FROM articles 
+        WHERE category_id = (SELECT category_id FROM categories WHERE category_name = 'Politics' LIMIT 1)
+        ORDER BY published_date DESC LIMIT 3";
+        $result = $conn->query($sql);
+        ?>
+
+        <div class="politics">
+          <h2>Politics</h2>
+          <div class="politics-container">
+            <div class="box">
+              <?php while ($row = $result->fetch_assoc()): ?>
+                <div class="article">
+                  <div class="img-box">
+                    <img src="../uploads/<?= $row['image_url'] ?>" alt="Politics Image">
+                  </div>
+                  <div class="content">
+                    <p><?= mb_substr($row['content'], 0, 180) ?>...</p>
+                    <div class="meta">
+                      <a href="details.php?id=<?= $row['article_id'] ?>" class="politics-btn">Read More</a>
+                      <span><?= substr($row['published_date'], 0, 10) ?></span>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+              <?php endwhile; ?>
+            </div>
+          </div>
+          <div class="section-header">
+            <a href="politics.php">Show All</a>
+          </div>
+        </div>
+
+
+
+
+        <hr>
+
+        <?php
+        $sql = "SELECT article_id, content, image_url, published_date FROM articles 
+        WHERE category_id = (SELECT category_id FROM categories WHERE category_name = 'Technology' LIMIT 1)
+        ORDER BY published_date DESC LIMIT 3";
+        $result = $conn->query($sql);
+        ?>
+
+        <div class="technology">
+          <h2>Technology</h2>
+          <div class="politics-container">
+            <div class="box">
+              <?php while ($row = $result->fetch_assoc()): ?>
+                <div class="article">
+                  <div class="img-box">
+                    <img src="../uploads/<?= $row['image_url'] ?>" alt="Technology Image">
+                  </div>
+                  <div class="content">
+                    <p><?= mb_substr($row['content'], 0, 180) ?>...</p>
+                    <div class="meta">
+                      <a href="details.php?id=<?= $row['article_id'] ?>" class="politics-btn">Read More</a>
+                      <span><?= substr($row['published_date'], 0, 10) ?></span>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+              <?php endwhile; ?>
+            </div>
+          </div>
+          <div class="section-header">
+            <a href="technology.php">Show All</a>
+          </div>
+        </div>
+        <hr>
+
+        <?php
+        $sql = "SELECT article_id, title, image_url, content, published_date FROM articles
+        WHERE category_id = (
+        SELECT category_id FROM categories WHERE category_name = 'Sport' LIMIT 1 )
+        ORDER BY published_date DESC LIMIT 3";
+        $sports_result = $conn->query($sql);
+        ?>
+
+        <div class="sports" id="sports">
+          <h2>Sports</h2>
+          <div class="sports-container">
+            <?php if ($sports_result && $sports_result->num_rows > 0): ?>
+              <?php while ($row = $sports_result->fetch_assoc()): ?>
+                <div class="card">
+                  <img src="../uploads/<?= htmlspecialchars($row['image_url']) ?>" alt="Sport News">
+                  <div class="info">
+                    <h3><?= htmlspecialchars($row['title']) ?></h3>
+                    <p><?= mb_substr(strip_tags($row['content']), 0, 90) ?>...</p>
+                    <div class="meta">
+                      <span><?= substr($row['published_date'], 0, 10) ?></span>
+                      <a href="details.php?id=<?= $row['article_id'] ?>" class="politics-btn">Read More</a>
+                    </div>
+                  </div>
+                </div>
+              <?php endwhile; ?>
+            <?php else: ?>
+              <p>No sports articles found.</p>
+            <?php endif; ?>
+          </div>
+          <div class="section-header">
+            <a href="sports.php">Show All</a>
+          </div>
+        </div>
+
+
+
+        <hr>
+        <?php
+        $sql = "SELECT article_id, title, image_url, content, published_date FROM articles
+        WHERE category_id = (
+          SELECT category_id FROM categories WHERE category_name = 'Featured' LIMIT 1
+        )
+        ORDER BY published_date DESC LIMIT 3";
+        $result = $conn->query($sql);
+        ?>
+
+        <div class="articles" id="featuredarticles">
+          <section class="blog" id="featuredarticles">
+            <h2>Featured Articles</h2>
+
+            <div class="blog-container">
+              <?php if ($result && $result->num_rows > 0): ?>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                  <div class="box">
+                    <img src="../uploads/<?= htmlspecialchars($row['image_url']) ?>" alt="Article Image">
+                      <span><?= substr($row['published_date'], 0, 10) ?></span>
+                    <h3><?= htmlspecialchars($row['title']) ?></h3>
+                    <p><?= mb_substr(strip_tags($row['content']), 0, 20) ?>...</p>
+                    <a href="details.php?id=<?= $row['article_id'] ?>" class="politics-btn">Read More</a>
+                    </a>
+                  </div>
+                <?php endwhile; ?>
+              <?php else: ?>
+                <p>No featured articles found.</p>
+              <?php endif; ?>
+            </div>
+
+            <div class="section-header">
+              <a href="articles.php">Show All</a>
+            </div>
+          </section>
+        </div>
+
+
+
+
+
+
+
+
+
+    </div>
+    <hr>
+
+    </main>
+
+  </div>
+  </div>
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 NewsNest. All rights reserved.</p>
+
+    </div>
+  </footer>
+
+</body>
+
+</html>
