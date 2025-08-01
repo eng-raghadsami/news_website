@@ -61,7 +61,11 @@
                 <li>
                   <div>
                     <h4><?= mb_substr(strip_tags($row['content']), 0, 90) ?></h4>
-                      <span><?= substr($row['published_date'], 0, 10) ?></span>
+                    <span>
+                      <div class="date">
+                        <?= date("d M, Y", strtotime($row['published_date'])) ?>
+                      </div>
+                    </span>
 
                   </div>
                 </li>
@@ -92,7 +96,11 @@
                       <h4><?= htmlspecialchars($row['title']) ?></h4>
                       <img src="../uploads/<?= $row['image_url'] ?>" alt="Popular Image">
 
-                      <span><?= substr($row['published_date'], 0, 10) ?></span>
+                      <span>
+                        <div class="date">
+                          <?= date("d M, Y", strtotime($row['published_date'])) ?>
+                        </div>
+                      </span>
                     </div>
                   </li>
 
@@ -111,6 +119,37 @@
       </aside>
       <hr>
       <main class="main-content">
+        <form action="search.php" method="GET" style="
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    max-width: 100%;
+">
+          <input type="text" name="q" placeholder="Search articles..." required style="
+      padding: 10px;
+      flex: 1;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+  ">
+          <button type="submit" style="
+      background-color: #836540;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 16px;
+    
+      transition: background-color 0.3s;
+  ">
+            Search
+          </button>
+        </form>
+
+
         <div class="aboutMe" id="home">
           <h1 class="name">News<span class="nest">Nest</span></h1>
 
@@ -122,7 +161,7 @@
 
 
         <?php
-        $sql = "SELECT article_id, content, image_url, published_date FROM articles 
+        $sql = "SELECT article_id,title, content, image_url, published_date FROM articles 
         WHERE category_id = (SELECT category_id FROM categories WHERE category_name = 'Politics' LIMIT 1)
         ORDER BY published_date DESC LIMIT 3";
         $result = $conn->query($sql);
@@ -135,13 +174,25 @@
               <?php while ($row = $result->fetch_assoc()): ?>
                 <div class="article">
                   <div class="img-box">
-                    <img src="../uploads/<?= $row['image_url'] ?>" alt="Politics Image">
+                    <img src="../uploads/<?= htmlspecialchars($row['image_url']) ?>" alt="Politics Image">
                   </div>
                   <div class="content">
-                    <p><?= mb_substr($row['content'], 0, 180) ?>...</p>
+                    <h3 class="article-title1">
+                      <a href="details.php?id=<?= $row['article_id'] ?>">
+                        <?= htmlspecialchars($row['title']) ?>
+                      </a>
+                    </h3>
+
+
+                    <p style="color:#836540;"><?= mb_substr(strip_tags($row['content']), 0, 180) ?>...</p>
+
                     <div class="meta">
                       <a href="details.php?id=<?= $row['article_id'] ?>" class="politics-btn">Read More</a>
-                      <span><?= substr($row['published_date'], 0, 10) ?></span>
+                      <span>
+                        <div class="date">
+                          <?= date("d M, Y", strtotime($row['published_date'])) ?>
+                        </div>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -160,7 +211,7 @@
         <hr>
 
         <?php
-        $sql = "SELECT article_id, content, image_url, published_date FROM articles 
+        $sql = "SELECT article_id,title, content, image_url, published_date FROM articles 
         WHERE category_id = (SELECT category_id FROM categories WHERE category_name = 'Technology' LIMIT 1)
         ORDER BY published_date DESC LIMIT 3";
         $result = $conn->query($sql);
@@ -176,10 +227,21 @@
                     <img src="../uploads/<?= $row['image_url'] ?>" alt="Technology Image">
                   </div>
                   <div class="content">
-                    <p><?= mb_substr($row['content'], 0, 180) ?>...</p>
+                    <h3 class="article-title1">
+                      <a href="details.php?id=<?= $row['article_id'] ?>">
+                        <?= htmlspecialchars($row['title']) ?>
+                      </a>
+                    </h3>
+
+
+                    <p style="color:#836540;"><?= mb_substr(strip_tags($row['content']), 0, 180) ?>...</p>
                     <div class="meta">
                       <a href="details.php?id=<?= $row['article_id'] ?>" class="politics-btn">Read More</a>
-                      <span><?= substr($row['published_date'], 0, 10) ?></span>
+                      <span>
+                        <div class="date">
+                          <?= date("d M, Y", strtotime($row['published_date'])) ?>
+                        </div>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -209,11 +271,18 @@
                 <div class="card">
                   <img src="../uploads/<?= htmlspecialchars($row['image_url']) ?>" alt="Sport News">
                   <div class="info">
-                    <h3><?= htmlspecialchars($row['title']) ?></h3>
+                    <h3 class="article-title1">
+                      <a href="details.php?id=<?= $row['article_id'] ?>">
+                        <?= htmlspecialchars($row['title']) ?>
+                      </a>
+                    </h3>
                     <p><?= mb_substr(strip_tags($row['content']), 0, 90) ?>...</p>
                     <div class="meta">
-                      <span><?= substr($row['published_date'], 0, 10) ?></span>
-                      <a href="details.php?id=<?= $row['article_id'] ?>" class="politics-btn">Read More</a>
+                      <span>
+                        <div class="date">
+                          <?= date("d M, Y", strtotime($row['published_date'])) ?>
+                        </div>
+                      </span> <a href="details.php?id=<?= $row['article_id'] ?>" class="politics-btn">Read More</a>
                     </div>
                   </div>
                 </div>
@@ -248,8 +317,16 @@
                 <?php while ($row = $result->fetch_assoc()): ?>
                   <div class="box">
                     <img src="../uploads/<?= htmlspecialchars($row['image_url']) ?>" alt="Article Image">
-                      <span><?= substr($row['published_date'], 0, 10) ?></span>
-                    <h3><?= htmlspecialchars($row['title']) ?></h3>
+                    <span>
+                      <div class="date">
+                        <?= date("d M, Y", strtotime($row['published_date'])) ?>
+                      </div>
+                    </span>
+                    <h3 class="article-title1">
+                      <a href="details.php?id=<?= $row['article_id'] ?>">
+                        <?= htmlspecialchars($row['title']) ?>
+                      </a>
+                    </h3>
                     <p><?= mb_substr(strip_tags($row['content']), 0, 20) ?>...</p>
                     <a href="details.php?id=<?= $row['article_id'] ?>" class="politics-btn">Read More</a>
                     </a>

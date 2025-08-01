@@ -59,7 +59,11 @@
                 <li>
                   <div>
                     <h4><?= mb_substr(strip_tags($row['content']), 0, 90) ?></h4>
-                      <span><?= substr($row['published_date'], 0, 10) ?></span>
+                    <span>
+                      <div class="date">
+                        <?= date("d M, Y", strtotime($row['published_date'])) ?>
+                      </div>
+                    </span>
                   </div>
                 </li>
 
@@ -90,7 +94,11 @@
                       <h4><?= htmlspecialchars($row['title']) ?></h4>
                       <img src="../uploads/<?= $row['image_url'] ?>" alt="Popular Image">
 
-                      <span><?= substr($row['published_date'], 0, 10) ?></span>
+                      <span>
+                        <div class="date">
+                          <?= date("d M, Y", strtotime($row['published_date'])) ?>
+                        </div>
+                      </span>
                     </div>
                   </li>
 

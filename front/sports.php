@@ -15,11 +15,15 @@ $sports_result = $conn->query($sql);
         <div class="card">
           <img src="../uploads/<?= htmlspecialchars($row['image_url']) ?>" alt="Sport News">
           <div class="info">
-            <h3><?= htmlspecialchars($row['title']) ?></h3>
+            <h3 class="article-title1">
+              <a href="details.php?id=<?= $row['article_id'] ?>">
+                <?= htmlspecialchars($row['title']) ?>
+              </a>
+            </h3>
             <p><?= mb_substr(strip_tags($row['content']), 0, 90) ?>...</p>
             <div class="meta">
-                      <span><?= substr($row['published_date'], 0, 10) ?></span>
-                      <a href="details.php?id=<?= $row['article_id'] ?>" class="politics-btn">Read More</a>
+              <span><?= substr($row['published_date'], 0, 10) ?></span>
+              <a href="details.php?id=<?= $row['article_id'] ?>" class="politics-btn">Read More</a>
             </div>
           </div>
         </div>
@@ -28,7 +32,7 @@ $sports_result = $conn->query($sql);
       <p>No sports articles found.</p>
     <?php endif; ?>
   </div>
-  
+
 </div>
 
 <?php include 'layouts/footer.php'; ?>

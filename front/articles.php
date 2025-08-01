@@ -17,12 +17,16 @@ $result = $conn->query($sql);
         <?php while ($row = $result->fetch_assoc()): ?>
           <div class="box">
             <img src="../uploads/<?= htmlspecialchars($row['image_url']) ?>" alt="Article Image">
-                      <span><?= substr($row['published_date'], 0, 10) ?></span>
-            <h3><?= htmlspecialchars($row['title']) ?></h3>
+            <span><?= substr($row['published_date'], 0, 10) ?></span>
+            <h3 class="article-title1">
+              <a href="details.php?id=<?= $row['article_id'] ?>">
+                <?= htmlspecialchars($row['title']) ?>
+              </a>
+            </h3>
             <p><?= mb_substr(strip_tags($row['content']), 0, 20) ?>...</p>
-                      <a href="details.php?id=<?= $row['article_id'] ?>" class="politics-btn">Read More</a>
-            
-            
+            <a href="details.php?id=<?= $row['article_id'] ?>" class="politics-btn">Read More</a>
+
+
           </div>
         <?php endwhile; ?>
       <?php else: ?>
@@ -30,7 +34,7 @@ $result = $conn->query($sql);
       <?php endif; ?>
     </div>
 
- 
+
   </section>
 </div>
 
