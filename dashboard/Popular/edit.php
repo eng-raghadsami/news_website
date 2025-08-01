@@ -2,7 +2,6 @@
 include '../layouts/header.php';
 include '../../SQL/db_connect.php';
 
-// ======= جلب بيانات المقال ==========
 if (!isset($_GET['id'])) {
     die("❌ Article ID is missing.");
 }
@@ -21,7 +20,6 @@ if ($result->num_rows == 0) {
 
 $article = $result->fetch_assoc();
 
-// جلب التصنيفات
 $catResult = $conn->query("SELECT * FROM categories");
 ?>
 

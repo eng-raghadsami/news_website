@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 header("Location: ../front/index.php");
             }
-            exit(); // مهم جداً
+            exit();
         } else {
             $error = "❌ Incorrect password.";
         }
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<?php include 'layouts/header.php'; ?> <!-- بعد كل العمليات -->
+<?php include 'layouts/header.php'; ?> 
 
 <title>Login</title>
 <form method="post" class="login-container">
