@@ -482,19 +482,66 @@ span {
 }
 
 .footer {
-  background-color: #836540;
-  color: white;
-  text-align: center;
-  padding: 1rem 0;
-  margin-top: 2rem;
+  background-color: #ffeee513;
+  color: #eee;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
-.footer-content {
-  max-width: 1000px;
-  margin: auto;
-  
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
 }
+
+.footer-section {
+  flex: 1;
+  min-width: 250px;
+  margin-bottom: 20px;
+}
+
+.footer-section h4 {
+  margin-bottom: 10px;
+  color: #f5c518;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+}
+
+.footer-links a {
+  color: #eee;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+  color: #f5c518;
+}
+
+.social-icons a {
+  color: #eee;
+  margin-right: 15px;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.social-icons a:hover {
+  color: #f5c518;
+}
+
+.brand {
+  color: #f5c518;
+  font-weight: bold;
+}
+
 
 .alert {
   padding: 15px;
